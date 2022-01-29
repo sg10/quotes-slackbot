@@ -1,0 +1,8 @@
+{
+  "gpt3_prompt": "When the going gets tough, the tough get going.---sunrise in winter\nSuccess comes from having dreams that are bigger than your fears.---marathon runner\nOpportunities don’t happen, you create them.---sunny beach\nAlways make a total effort, even when the odds are against you.---clear blue sky\nStart where you are. Use what you have. Do what you can.---sunflower blossom\n",
+  "channel_id": "<Slack channel ID>",
+  "post_preview": "Motivational quote",
+  "post_text_working": "_The Bot is generating a quote_ ... :hourglass_flowing_sand:",
+  "post_text_done": "*Motivational quote* :robot_face: :brain:",
+  "logo_url": null
+}
