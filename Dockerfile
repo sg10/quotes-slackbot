@@ -21,6 +21,9 @@ WORKDIR /opt/quotes-slackbot
 COPY init.sh ./
 RUN ./init.sh
 
-COPY src requirements.txt setup.py ./
-RUN pip install . -r requirements.txt
+COPY requirements.txt ./
+RUN pip install -r requirements.txt
+
+COPY src setup.py config.json ./
+RUN pip install .
 CMD python -m quotes_slackbot.__main__
