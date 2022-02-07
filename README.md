@@ -52,8 +52,9 @@ them. Eventually he got sick of it, so I went on to automate both his 5 minutes 
 but those of Instagram influencers aiming to inspire humanity. 
 
 
-# Notes
+# Notes and references
 
 
 - This project has been set up using PyScaffold 4.1.4. For details and usage 
 information on PyScaffold see https://pyscaffold.org/.
+- GLIDE code used in this project originally from https://github.com/openai/glide-text2im
