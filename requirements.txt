@@ -6,3 +6,4 @@ torchvision==0.11.3
 pillow==9.0.1
 slack_sdk==3.13.0
 fastapi==0.73.0
+uvicorn==0.17.4

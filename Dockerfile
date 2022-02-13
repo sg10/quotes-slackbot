@@ -26,4 +26,6 @@ RUN pip install -r requirements.txt
 
 COPY src setup.py config.json ./
 RUN pip install .
-CMD python -m quotes_slackbot.__main__
+
+EXPOSE 8000
+CMD python -m quotes_slackbot.app

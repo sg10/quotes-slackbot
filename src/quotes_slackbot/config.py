@@ -8,6 +8,14 @@ JSON_CONFIG_FILENAME = "config.json"
 
 
 class BotConfig(BaseSettings):
+    port: int = 8000
+    host: str = "0.0.0.0"
+
+    # if a task is triggered but not picked up for N seconds,
+    #  it is dismissed
+    tasks_timeout: int = 2 * 60 * 60
+
+    send_post_preview: bool = False
     post_preview: str
     post_text_working: str
     post_text_done: str

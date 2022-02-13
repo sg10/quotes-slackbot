@@ -1,6 +1,7 @@
 import datetime
 import logging
 from io import BytesIO
+from typing import Optional
 from urllib.parse import quote_plus
 
 from quotes_slackbot.config import config
@@ -15,18 +16,19 @@ from quotes_slackbot.slack.slack_client import (
 logger = logging.getLogger(__name__)
 
 
-def run():
+def run(channel_id: Optional[str] = None):
     dt_start = datetime.datetime.now()
 
     slack = SingleMessageSlackClient(
         token=config.slack_token,
-        channel_id=config.channel_id,
+        channel_id=channel_id or config.channel_id,
     )
 
-    slack.put(
-        text=config.post_preview,
-        blocks=[slack_markdown_block(config.post_text_working)],
-    )
+    if config.send_post_preview:
+        slack.put(
+            text=config.post_preview,
+            blocks=[slack_markdown_block(config.post_text_working)],
+        )
 
     try:
 
