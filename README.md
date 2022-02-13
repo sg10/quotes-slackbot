@@ -12,17 +12,24 @@ them together and publishes them on a [Slack](https://www.slack.com) channel.
 
 # Examples
 
-![Quote: Leave today better than you found it.](examples/example-output-1.png)
 *Generated image theme:* snow-covered peak
 
-![Quote: Hope to the end.](examples/example-output-2.png)
+![Quote: Leave today better than you found it.](examples/example-output-1.png)
+
+
 *Generated image theme:* New York City night
 
-![Quote: The energy of the heart is the essence of life.](examples/example-output-4.png)
+![Quote: Hope to the end.](examples/example-output-2.png)
+
+
 *Generated image theme:* heart open
 
-![Quote: Life isn't about finding yourself, it's about creating yourself.](examples/example-output-3.png)
+![Quote: The energy of the heart is the essence of life.](examples/example-output-4.png)
+
+
 *Generated image theme:* sunset in summer
+
+![Quote: Life isn't about finding yourself, it's about creating yourself.](examples/example-output-3.png)
 
 
 
@@ -45,8 +52,9 @@ them. Eventually he got sick of it, so I went on to automate both his 5 minutes 
 but those of Instagram influencers aiming to inspire humanity. 
 
 
-# Notes
+# Notes and references
 
 
 - This project has been set up using PyScaffold 4.1.4. For details and usage 
 information on PyScaffold see https://pyscaffold.org/.
+- GLIDE code used in this project originally from https://github.com/openai/glide-text2im
