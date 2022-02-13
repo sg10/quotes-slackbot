@@ -69,6 +69,7 @@ async def generate_image(task: GenerateTask):
         await sleep(0.5)
 
     logger.info(f"Done {task.task_id}")
+    tasks.remove(task)
 
     busy_lock.release()
 
