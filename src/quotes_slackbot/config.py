@@ -28,8 +28,8 @@ class BotConfig(BaseSettings):
     gpt3_retries: int = 5
     gpt3_delimiter: str = "---"
     gpt3_tokens: int = 35
-    gpt3_temperature: float = 1.0
-    gpt3_frequency_penalty: int = 3
+    gpt3_temperature: float = 0.8
+    gpt3_frequency_penalty: int = 1.5
     gpt3_stop: str = "\n"
     gpt3_engine: str = "davinci"
     gpt3_openai_api_key: str = Field(..., env="OPENAI_KEY")

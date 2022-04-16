@@ -35,7 +35,8 @@ def assemble_image_and_text(image: Image, text: str) -> Image:
     lines.reverse()
     y_text = h - int(h * 0.1)
     for line in lines:
-        width, height = font.getsize(line)
+        width, _ = font.getsize(line)
+        _, height = font.getsize("W")
         y_text -= height
         # shadow
         draw.text(

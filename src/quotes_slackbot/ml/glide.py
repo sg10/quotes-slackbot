@@ -3,10 +3,8 @@ import logging
 import torch as th
 from glide_text2im.clip.model_creation import create_clip_model
 from glide_text2im.model_creation import (
-    create_model_and_diffusion,
-    model_and_diffusion_defaults,
-    model_and_diffusion_defaults_upsampler,
-)
+    create_model_and_diffusion, model_and_diffusion_defaults,
+    model_and_diffusion_defaults_upsampler)
 from PIL import Image
 
 from quotes_slackbot.config import config

@@ -18,6 +18,9 @@ RUN fnt install merriweather
 
 WORKDIR /opt/quotes-slackbot
 
+# if they're already downloaded, their server seems to be pretty slow
+# COPY models/ models/
+
 COPY init.sh ./
 RUN ./init.sh
 

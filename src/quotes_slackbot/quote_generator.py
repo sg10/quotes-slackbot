@@ -1,5 +1,6 @@
 import datetime
 import logging
+import sys
 from io import BytesIO
 from typing import Optional
 from urllib.parse import quote_plus
@@ -8,20 +9,20 @@ from quotes_slackbot.config import config
 from quotes_slackbot.image.assemble import assemble_image_and_text
 from quotes_slackbot.ml.glide import run_for_prompt
 from quotes_slackbot.ml.gpt3 import query_gpt3
-from quotes_slackbot.slack.slack_client import (
-    SingleMessageSlackClient,
-    slack_markdown_block,
-)
+from quotes_slackbot.slack.slack_client import (SingleMessageSlackClient,
+                                                slack_markdown_block)
 
 logger = logging.getLogger(__name__)
 
 
-def run(channel_id: Optional[str] = None):
+def run(quote: Optional[str] = None, motive: Optional[str] = None):
     dt_start = datetime.datetime.now()
+
+    logger.info(f"Slack channel ID: {config.channel_id}")
 
     slack = SingleMessageSlackClient(
         token=config.slack_token,
-        channel_id=channel_id or config.channel_id,
+        channel_id=config.channel_id,
     )
 
     if config.send_post_preview:
@@ -31,23 +32,11 @@ def run(channel_id: Optional[str] = None):
         )
 
     try:
+        if not quote or not motive:
+            motive, quote = fetch_quote_and_motive()
 
-        quote, motive = None, None
-        for _ in range(config.gpt3_retries):
-            result = query_gpt3(config.gpt3_prompt)
-            if config.gpt3_delimiter not in result:
-                logger.info(f"Skipping: {result}")
-                continue
-            parts = result.split(config.gpt3_delimiter)
-            if len(parts) == 2 and len(parts[0]) > 15 and len(parts[1]) > 5:
-                quote, motive = parts
-                break
-            else:
-                logger.info(f"Skipping: {result}")
-
-        if not quote:
+        if not quote or not motive:
             logger.error("Retries exceeded to obtain quote and motive")
-            # TODO handle error
             return
 
         logger.info(f"quote:   {quote}")
@@ -65,7 +54,10 @@ def run(channel_id: Optional[str] = None):
         slack.put(file_content=img_byte_arr, text=config.post_preview, blocks=blocks)
 
         duration = datetime.datetime.now() - dt_start
-        duration_str = f"{int(duration.total_seconds() // 60)} min {int(duration.total_seconds()) % 60} s"
+        duration_str = (
+            f"{int(duration.total_seconds() // 60)} min "
+            f"{int(duration.total_seconds()) % 60} s"
+        )
         escaped_query = quote_plus(f'"{quote}"')
         url = "https://www.google.com/search?q=" + escaped_query
         details_post = "\n".join(
@@ -90,6 +82,29 @@ def run(channel_id: Optional[str] = None):
         logger.exception(e)
 
 
+def fetch_quote_and_motive():
+    motive, quote = None, None
+    for _ in range(config.gpt3_retries):
+        result = query_gpt3(config.gpt3_prompt)
+        if config.gpt3_delimiter not in result:
+            logger.info(f"Skipping: {result}")
+            continue
+        parts = result.split(config.gpt3_delimiter)
+        if len(parts) == 2 and len(parts[0]) > 15 and len(parts[1]) > 5:
+            quote, motive = parts
+            break
+        else:
+            logger.info(f"Skipping: {result}")
+    return motive, quote
+
+
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    run()
+    if len(sys.argv) == 3:
+        quote = sys.argv[1]
+        motive = sys.argv[2]
+        print(f"received: {quote}")
+        print(f"          {motive}")
+        run(quote=quote, motive=motive)
+    else:
+        run()
